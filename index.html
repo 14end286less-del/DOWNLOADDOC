@@ -575,6 +575,7 @@
                     </div>
                     <div class="flex items-center gap-4 text-xs">
                         <a href="pages/about.html" class="text-muted-foreground hover:text-foreground transition-colors">About Us</a>
+                        <a href="pages/cookies.html" class="text-muted-foreground hover:text-foreground transition-colors">Cookies</a>
                         <a href="pages/privacy-policy.html" class="text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
                         <a href="pages/terms.html" class="text-muted-foreground hover:text-foreground transition-colors">Terms & Conditions</a>
                     </div>
@@ -589,11 +590,32 @@
         const darkModeToggle = document.getElementById('darkModeToggle');
         const sunIcon = document.getElementById('sunIcon');
         const moonIcon = document.getElementById('moonIcon');
+        const cookieBanner = document.getElementById('cookieBanner');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
 
         if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             html.classList.add('dark');
             sunIcon.classList.remove('hidden');
             moonIcon.classList.add('hidden');
+        }
+
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieBanner.classList.remove('hidden');
+        }
+
+        if (acceptCookies) {
+            acceptCookies.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'accepted');
+                cookieBanner.classList.add('hidden');
+            });
+        }
+
+        if (declineCookies) {
+            declineCookies.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'declined');
+                cookieBanner.classList.add('hidden');
+            });
         }
 
         darkModeToggle.addEventListener('click', () => {
@@ -797,5 +819,14 @@
             document.getElementById('compressionBar').style.width = '0%';
         }
     </script>
+    <div id="cookieBanner" class="hidden fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border p-4">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-sm text-muted-foreground">We use local storage to remember your preferences. No tracking cookies.</p>
+            <div class="flex items-center gap-3">
+                <button id="declineCookies" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Decline</button>
+                <button id="acceptCookies" class="px-4 py-1.5 text-sm font-medium bg-foreground text-background rounded-lg hover:opacity-90 transition-opacity">Accept</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
