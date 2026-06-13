@@ -2,6 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-34J85ZYRRZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-34J85ZYRRZ');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3944047854918341" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ — DownloadDoc | Free Document Compressor Help</title>
     <meta name="description" content="Common questions about DownloadDoc: Is it free? Is my data safe? What formats are supported? How much will my file shrink? Get answers.">
@@ -65,6 +75,14 @@
     }
     </script>
     
+    <!-- PWA / Favicon -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="DOWNDOC" />
+    <link rel="manifest" href="/site.webmanifest" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,18 +119,24 @@
             background-color: #0a0a0a;
             color: #ededed;
         }
-        .hero-gradient {
-            background: radial-gradient(ellipse at top, #f8fafc 0%, #ffffff 50%);
-        }
-        .dark .hero-gradient {
-            background: radial-gradient(ellipse at top, #0f0f0f 0%, #0a0a0a 50%);
-        }
-        details[open] summary svg {
-            transform: rotate(180deg);
-        }
-        summary {
-            list-style: none;
-        }
+.hero-gradient {
+             background: radial-gradient(ellipse at top, #f8fafc 0%, #ffffff 50%);
+         }
+         .dark .hero-gradient { background: radial-gradient(ellipse at top, #0f0f0f 0%, #0a0a0a 50%); }
+          footer a:hover {
+              color: #ffffff;
+          }
+
+          .dark footer a:hover {
+              filter: drop-shadow(0 0 8px rgba(237, 237, 237, 0.7));
+              color: #ffffff;
+          }
+         details[open] summary svg {
+             transform: rotate(180deg);
+         }
+         summary {
+             list-style: none;
+         }
         summary::-webkit-details-marker {
             display: none;
         }
@@ -121,7 +145,7 @@
 <body class="bg-background text-foreground font-sans dark:bg-background-dark dark:text-foreground-dark">
 
     <nav class="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl dark:bg-background-dark/80 dark:backdrop-blur-xl">
-        <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
             <a href="../index.html" class="flex items-center gap-2">
                 <svg class="w-5 h-5 dark:text-foreground-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -129,12 +153,11 @@
                 </svg>
                 <span class="font-semibold text-sm tracking-tight dark:text-foreground-dark">DownloadDoc</span>
             </a>
-            <div class="flex items-center gap-6">
-                <a href="../index.html" class="text-sm text-muted dark:text-muted-dark hover:text-foreground transition-colors">Compressor</a>
-                <a href="features.html" class="text-sm text-muted dark:text-muted-dark hover:text-foreground transition-colors">Features</a>
-                <a href="faq.html" class="text-sm text-foreground dark:text-foreground-dark font-medium">FAQ</a>
-                <a href="contact.html" class="text-sm text-muted dark:text-muted-dark hover:text-foreground transition-colors">Contact</a>
-                <button id="darkModeToggle" class="p-2 rounded-lg border border-border hover:bg-muted/10 transition-colors" aria-label="Toggle dark mode">
+            <div class="flex items-center gap-2 sm:gap-4">
+                <a href="../index.html" class="hidden sm:block text-sm text-muted dark:text-muted-dark hover:text-foreground transition-colors">Compressor</a>
+                <a href="tools.html" class="hidden sm:block text-sm text-muted dark:text-muted-dark hover:text-foreground transition-colors">Tools</a>
+                <a href="features.html" class="hidden sm:block text-sm text-muted dark:text-muted-dark hover:text-foreground transition-colors">Features</a>
+                <a href="faq.html" class="hidden sm:block text-sm text-foreground dark:text-foreground-dark font-medium">FAQ</a>                <button id="darkModeToggle" class="p-2 rounded-lg border border-border hover:bg-muted/10 transition-colors" aria-label="Toggle dark mode">
                     <svg id="sunIcon" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
                         <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -150,7 +173,21 @@
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
                 </button>
+                <button id="mobileMenuBtn" class="sm:hidden p-2 rounded-lg border border-border hover:bg-muted/10 transition-colors" aria-label="Menu">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
             </div>
+        </div>
+        <div id="mobileMenu" class="hidden sm:hidden bg-background dark:bg-background-dark border-t border-border">
+            <div class="px-4 py-3 flex flex-col gap-3">
+                <a href="../index.html" class="text-sm text-foreground dark:text-foreground-dark hover:text-muted transition-colors py-1">Compressor</a>
+                <a href="tools.html" class="text-sm text-foreground dark:text-foreground-dark hover:text-muted transition-colors py-1">Tools</a>
+                <a href="features.html" class="text-sm text-foreground dark:text-foreground-dark hover:text-muted transition-colors py-1">Features</a>
+                <a href="faq.html" class="text-sm text-foreground dark:text-foreground-dark font-medium py-1">FAQ</a>            </div>
         </div>
     </nav>
 
@@ -193,7 +230,7 @@
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </summary>
-                    <p class="text-sm text-muted-foreground mt-3 leading-relaxed dark:text-muted-foreground-dark">Images (PNG, JPG, GIF, WebP) compress natively. PDFs and Word docs are supported with embedded image optimization.</p>
+                    <p class="text-sm text-muted-foreground mt-3 leading-relaxed dark:text-muted-foreground-dark">Images (PNG, JPG, GIF, WebP) compress natively. PDFs, Word docs, Excel exports, and image-to-PDF tools are supported with browser-based processing.</p>
                 </details>
                 <details class="group py-5">
                     <summary class="flex items-center justify-between cursor-pointer list-none">
@@ -238,14 +275,21 @@
     <footer class="border-t border-border py-8">
         <div class="max-w-5xl mx-auto px-6">
             <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <a href="../index.html" class="flex items-center gap-2">
-                    <svg class="w-4 h-4 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                    </svg>
-                    <span class="text-xs text-muted-foreground">DownloadDoc</span>
-                </a>
-                <p class="text-xs text-muted-foreground">© 2026 DownloadDoc. Open source and free forever.</p>
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <a href="../index.html" class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                        <span class="text-xs text-muted-foreground">DownloadDoc</span>
+                    </a>
+                    <div class="flex items-center gap-4 text-xs">
+                        <a href="privacy-policy.html" class="text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
+                        <a href="about.html" class="text-muted-foreground hover:text-foreground transition-colors">About Us</a>
+                        <a href="terms.html" class="text-muted-foreground hover:text-foreground transition-colors">Terms & Conditions</a>
+                    </div>
+                </div>
+                <p class="text-xs text-muted-foreground text-right">© 2026 DownloadDoc. Open source and free forever. ❤️ Made with love for users by Chiku.</p>
             </div>
         </div>
     </footer>
@@ -269,6 +313,14 @@
             sunIcon.classList.toggle('hidden', !isDark);
             moonIcon.classList.toggle('hidden', isDark);
         });
+
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
     </script>
 </body>
 </html>

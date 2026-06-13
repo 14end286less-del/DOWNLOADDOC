@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-34J85ZYRRZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-34J85ZYRRZ');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3944047854918341" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Excel Converter — DownloadDoc</title>
+    <meta name="description" content="Convert PDF text into an Excel XLSX spreadsheet online for free. DownloadDoc processes files locally in your browser with no uploads.">
+    <meta name="keywords" content="PDF to Excel, PDF to XLSX, convert PDF to Excel, free PDF spreadsheet converter, online PDF to Excel">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://downloaddoc.pages.dev/pages/pdf-to-excel.html">
+    <meta property="og:title" content="PDF to Excel Converter — DownloadDoc">
+    <meta property="og:description" content="Convert PDF text into an Excel spreadsheet locally in your browser.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://downloaddoc.pages.dev/pages/pdf-to-excel.html">
+    <meta property="og:image" content="https://downloaddoc.pages.dev/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PDF to Excel Converter — DownloadDoc">
+    <meta name="twitter:description" content="Convert PDF text into an Excel spreadsheet locally in your browser.">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    colors: {
+                        background: { DEFAULT: '#ffffff', dark: '#0a0a0a' },
+                        foreground: { DEFAULT: '#000000', dark: '#ededed' },
+                        muted: { DEFAULT: '#666666', dark: '#a1a1a1' },
+                        'muted-foreground': { DEFAULT: '#888888', dark: '#707070' },
+                        border: { DEFAULT: '#eaeaea', dark: '#262626' },
+                        'border-strong': { DEFAULT: '#d4d4d4', dark: '#404040' },
+                    },
+                }
+            }
+        };
+    </script>
+    <style>
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; background-color: #ffffff; color: #000000; }
+        .dark body { background-color: #0a0a0a; color: #ededed; }
+        .hero-gradient { background: radial-gradient(ellipse at top, #f8fafc 0%, #ffffff 50%); }
+        .dark .hero-gradient { background: radial-gradient(ellipse at top, #0f0f0f 0%, #0a0a0a 50%); }
+        .upload-card { box-shadow: 0 0 0 1px rgba(0,0,0,0.03), 0 2px 8px rgba(0,0,0,0.04), 0 20px 40px rgba(0,0,0,0.04); transition: all 0.2s ease; background-color: #ffffff; }
+        .dark .upload-card { box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 2px 8px rgba(0,0,0,0.2), 0 20px 40px rgba(0,0,0,0.3); background-color: #0a0a0a; }
+        .upload-card:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.06), 0 20px 40px rgba(0,0,0,0.06); }
+        .btn-primary { box-shadow: 0 0 0 1px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.1); transition: all 0.15s ease; background-color: #000000; color: #ffffff; }
+        .dark .btn-primary { box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 2px 4px rgba(255,255,255,0.1); background-color: #ededed; color: #0a0a0a; }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.15); }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.animate-fade-in-up { animation: fadeInUp 0.4s ease-out forwards; }
+          footer a:hover {
+              color: #ffffff;
+          }
+
+          .dark footer a:hover {
+              filter: drop-shadow(0 0 8px rgba(237, 237, 237, 0.7));
+              color: #ffffff;
+          }
+     </style>
+</head>
+<body class="bg-background text-foreground font-sans dark:bg-background-dark dark:text-foreground-dark" data-tool-type="pdf-to-excel">
+    <nav class="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl dark:bg-background-dark/80 dark:backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+            <a href="../index.html" class="flex items-center gap-2">
+                <svg class="w-5 h-5 dark:text-foreground-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                <span class="font-semibold text-sm tracking-tight dark:text-foreground-dark">DownloadDoc</span>
+            </a>
+            <div class="flex items-center gap-2 sm:gap-4">
+                <a href="../index.html" class="hidden sm:block text-sm text-muted-foreground dark:text-muted-foreground hover:text-foreground transition-colors">Compressor</a>
+                <a href="tools.html" class="hidden sm:block text-sm text-muted-foreground dark:text-muted-foreground hover:text-foreground transition-colors">Tools</a>
+                <a href="features.html" class="hidden sm:block text-sm text-muted-foreground dark:text-muted-foreground hover:text-foreground transition-colors">Features</a>
+                <a href="faq.html" class="hidden sm:block text-sm text-muted-foreground dark:text-muted-foreground hover:text-foreground transition-colors">FAQ</a>                <button id="darkModeToggle" class="p-2 rounded-lg border border-border hover:bg-muted/10 transition-colors" aria-label="Toggle dark mode">
+                    <svg id="sunIcon" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg id="moonIcon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button id="mobileMenuBtn" class="sm:hidden p-2 rounded-lg border border-border hover:bg-muted/10 transition-colors" aria-label="Menu">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden sm:hidden bg-background dark:bg-background-dark border-t border-border">
+            <div class="px-4 py-3 flex flex-col gap-3">
+                <a href="../index.html" class="text-sm text-foreground dark:text-foreground-dark hover:text-muted transition-colors py-1">Compressor</a>
+                <a href="tools.html" class="text-sm text-foreground dark:text-foreground-dark hover:text-muted transition-colors py-1">Tools</a>
+                <a href="features.html" class="text-sm text-foreground dark:text-foreground-dark hover:text-muted transition-colors py-1">Features</a>
+                <a href="faq.html" class="text-sm text-foreground dark:text-foreground-dark hover:text-muted transition-colors py-1">FAQ</a>            </div>
+        </div>
+    </nav>
+
+    <section class="hero-gradient relative pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden">
+        <div class="relative max-w-4xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-background/50 dark:bg-background-dark/50 backdrop-blur-sm mb-6">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                <span class="text-xs font-medium text-muted-foreground dark:text-muted-foreground">Local only · No upload · Free</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tighter leading-[1.1] mb-6 dark:text-foreground-dark">
+                PDF to Excel Converter
+            </h1>
+            <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed dark:text-muted-foreground-dark">
+                Extract selectable text from a PDF and place it into an XLSX spreadsheet with page numbers.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-12 lg:py-20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="upload-card rounded-xl p-5 sm:p-8 lg:p-10 border border-border dark:bg-background-dark dark:border-border-dark">
+                <div id="uploadZone" class="group relative rounded-lg border-2 border-dashed border-border hover:border-muted-foreground/40 transition-colors p-6 sm:p-12 text-center cursor-pointer dark:border-border-dark">
+                    <input type="file" id="fileInput" class="hidden" accept=".pdf,application/pdf">
+                    <div class="max-w-xs mx-auto">
+                        <div class="w-12 h-12 rounded-lg bg-muted/10 dark:bg-white/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition-transform">
+                            <svg class="w-6 h-6 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                        </div>
+                        <p class="text-sm font-medium mb-1 dark:text-foreground-dark">Drop a PDF here, or click to browse</p>
+                        <p class="text-xs text-muted-foreground">Best for selectable text PDFs · Max 50 MB recommended</p>
+                    </div>
+                </div>
+
+                <div id="fileSection" class="hidden mt-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6">
+                        <div class="lg:col-span-2 rounded-lg border border-border bg-muted/5 dark:bg-white/5 dark:border-border-dark p-4">
+                            <p class="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">Selected file</p>
+                            <div id="previewList" class="space-y-3"></div>
+                        </div>
+                        <div class="lg:col-span-3 rounded-lg border border-border bg-muted/5 dark:bg-white/5 dark:border-border-dark p-4">
+                            <p class="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">Conversion note</p>
+                            <p id="statusMessage" class="text-sm text-muted-foreground leading-relaxed dark:text-muted-foreground-dark">Choose a PDF to start. This creates a text-based XLSX file in your browser.</p>
+                            <div class="flex gap-3 pt-5">
+                                <button id="convertBtn" class="btn-primary flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium">
+                                    Convert to Excel
+                                </button>
+                                <button id="resetBtn" class="inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-medium border border-border hover:bg-muted/5 transition-colors">
+                                    Clear
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="resultsSection" class="hidden mt-6 rounded-lg border border-green-200 bg-green-50/50 dark:bg-green-950/50 dark:border-green-800 p-4 sm:p-6">
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <p id="resultTitle" class="text-sm font-semibold dark:text-foreground-dark">Conversion complete</p>
+                            <p id="resultDetails" class="text-sm text-muted-foreground mt-1 leading-relaxed dark:text-muted-foreground-dark">Your spreadsheet is ready.</p>
+                        </div>
+                        <p id="resultSize" class="text-sm font-medium tabular-nums text-green-700 dark:text-green-400">0 KB</p>
+                    </div>
+                    <div class="flex gap-3 mt-5">
+                        <button id="downloadResultBtn" class="btn-primary inline-flex items-center justify-center gap-2 bg-foreground text-background px-4 py-2.5 rounded-lg text-sm font-medium flex-1">
+                            Download again
+                        </button>
+                        <a href="tools.html" class="inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-medium border border-border hover:bg-muted/5 transition-colors">
+                            More tools
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 border-t border-border">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="rounded-lg border border-border bg-background dark:bg-background-dark dark:border-border-dark p-6">
+                    <div class="w-8 h-8 rounded-md bg-muted/10 flex items-center justify-center mb-4">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 3h18v18H3z"></path>
+                            <path d="M3 9h18M3 15h18M9 3v18M15 3v18"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-sm font-semibold mb-2 dark:text-foreground-dark">XLSX output</h3>
+                    <p class="text-sm text-muted-foreground leading-relaxed dark:text-muted-foreground-dark">The exported spreadsheet opens in Excel, Google Sheets, LibreOffice, and Numbers.</p>
+                </div>
+                <div class="rounded-lg border border-border bg-background dark:bg-background-dark dark:border-border-dark p-6">
+                    <div class="w-8 h-8 rounded-md bg-muted/10 flex items-center justify-center mb-4">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-sm font-semibold mb-2 dark:text-foreground-dark">Private conversion</h3>
+                    <p class="text-sm text-muted-foreground leading-relaxed dark:text-muted-foreground-dark">Your PDF is processed in this browser tab. Nothing is uploaded to a server.</p>
+                </div>
+                <div class="rounded-lg border border-border bg-background dark:bg-background-dark dark:border-border-dark p-6">
+                    <div class="w-8 h-8 rounded-md bg-muted/10 flex items-center justify-center mb-4">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-sm font-semibold mb-2 dark:text-foreground-dark">Best for text PDFs</h3>
+                    <p class="text-sm text-muted-foreground leading-relaxed dark:text-muted-foreground-dark">Use this for PDFs with selectable text. Scanned image PDFs may need OCR first.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-border py-8">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <a href="../index.html" class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                        <span class="text-xs text-muted-foreground">DownloadDoc</span>
+                    </a>
+                    <div class="flex items-center gap-4 text-xs">
+                        <a href="privacy-policy.html" class="text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
+                        <a href="about.html" class="text-muted-foreground hover:text-foreground transition-colors">About Us</a>
+                        <a href="terms.html" class="text-muted-foreground hover:text-foreground transition-colors">Terms & Conditions</a>
+                    </div>
+                </div>
+                <p class="text-xs text-muted-foreground text-right">© 2026 DownloadDoc. Open source and free forever. ❤️ Made with love for users by Chiku.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
+    <script src="../assets/toolkit.js"></script>
+</body>
+</html>
