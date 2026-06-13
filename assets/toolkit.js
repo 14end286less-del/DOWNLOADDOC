@@ -798,19 +798,20 @@
         };
     }
 
-    async function createDocxFromText(result) {
-        const blocks = result && result.blocks ? result.blocks : [];
+async function createDocxFromText(result) {
         const JSZip = requireGlobal('JSZip', 'ZIP creation');
         const zip = new JSZip();
 
         const pages = [];
         const imageRels = [];
 
+        const blocks = result && result.blocks ? result.blocks : [];
+
         for (let pageIndex = 0; pageIndex < blocks.length; pageIndex += 1) {
             const block = blocks[pageIndex];
             const pageMedia = [];
             const pageImageRels = [];
-            const images = block.images || [];
+            const images = block && block.images ? block.images : [];
 
             for (let imageIndex = 0; imageIndex < images.length; imageIndex += 1) {
                 const image = images[imageIndex];
@@ -825,7 +826,10 @@
             }
 
             const paragraphs = [];
-            (block.lines || []).forEach((line) => {
+            const lines = block && block.lines ? block.lines : [];
+            lines.forEach((line) => {
+                const lineText = typeof line === 'string' ? line : (line.text || '');
+                if (!lineText) return;
                 const scale = typeof line.scale === 'number' && line.scale > 0 ? line.scale : 1;
                 const fontSize = Math.max(8, Math.min(72, Math.round(scale > 1 ? scale * 10 : 22)));
                 const isHeading = scale > 1.45;
@@ -834,27 +838,26 @@
                 paragraphs.push({
                     type: isHeading ? 'heading' : 'paragraph',
                     level: headingLevel,
-                    text: escapeXml(line.text || ''),
+                    text: escapeXml(lineText),
                     lines: [{
-                        text: escapeXml(line.text || ''),
+                        text: escapeXml(lineText),
                         bold: scale > 1.15 || isHeading,
                         size: fontSize
                     }]
                 });
             });
 
-            pages.push({ pageNumber: block.page, paragraphs, media: pageMedia, rels: pageImageRels });
+            pages.push({ pageNumber: block ? block.page : 1, paragraphs, media: pageMedia, rels: pageImageRels });
             imageRels.push(...pageImageRels);
         }
 
         zip.file('[Content_Types].xml', buildContentTypes(imageRels));
-        zip.folder('_rels').file('.rels', `<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">\n  <Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument\" Target=\"word/document.xml\"/>\n</Relationships>`);
+        zip.folder('_rels').file('.rels', `<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">\n  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>\n</Relationships>`);
         zip.folder('word').folder('_rels').file('document.xml.rels', buildDocumentRels(imageRels));
         zip.folder('word').file('document.xml', buildRichDocumentXml(pages));
 
-        return zip.generateAsync({ type: 'blob', compression: 'DEFLATE' }).then((blob) => {
-            return new Blob([blob], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-        });
+        const arrayBuffer = await zip.generateAsync({ type: 'arraybuffer', compression: 'DEFLATE' });
+        return new Blob([arrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
     }
 
     async function imageToPngBlob(image) {
@@ -920,7 +923,9 @@
         const sections = [];
 
         (pages || []).forEach((page) => {
+            if (!page) return;
             (page.paragraphs || []).forEach((paragraph) => {
+                if (!paragraph) return;
                 if (paragraph.type === 'heading') {
                     sections.push(headingParagraphXml(paragraph.level || 1, paragraph.text || ''));
                 } else if (paragraph.lines && paragraph.lines.length) {
@@ -931,6 +936,10 @@
             (page.media || []).forEach((media) => sections.push(imageXml(media)));
         });
 
+        if (sections.length === 0) {
+            sections.push(paragraphLinesXml([{ text: 'No text could be extracted.', size: 22, bold: false }]));
+        }
+
         const body = sections.join('');
         return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
@@ -939,6 +948,7 @@
     }
 
     function headingParagraphXml(level, text) {
+        if (!text) text = 'Untitled';
         const size = Math.max(1, Math.min(level, 6));
         const spacing = Math.max(160, 40 * (7 - size));
         const fontSize = Math.max(16, 32 - (size - 1) * 3);
@@ -959,7 +969,7 @@
             return `<w:r><w:rPr>${boldAttr}<w:color w:val="222222"/><w:sz w:val="${size}"/></w:rPr><w:t xml:space="preserve">${escapeXml(line.text || '')}</w:t></w:r>`;
         }).join('');
 
-        return `<w:p><w:pPr><w:spacing w:after="160" w:line="280" w:lineRule="auto"/></w:pPr>${runs}</w:p>`;
+        return `<w:p><w:pPr><w:spacing w:after="160" w:line="280" w:lineRule="auto"/></w:pPr>${runs || '<w:r><w:t></w:t></w:r>'}</w:p>`;
     }
 
     function imageXml(media) {
@@ -1265,7 +1275,10 @@
                 return;
             }
 
-            lines.forEach((line) => rows.push([block.page, line.text || line]));
+            lines.forEach((line) => {
+                const text = typeof line === 'string' ? line : (line.text || '');
+                rows.push([block.page, text]);
+            });
         });
 
         const worksheet = XLSX.utils.aoa_to_sheet(rows);
@@ -1275,8 +1288,13 @@
         ];
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'PDF Text');
-        const buffer = XLSX.write(workbook, { type: 'array', bookType: 'xlsx' });
-        return new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' });
+        const buf = new ArrayBuffer(wbout.length);
+        const view = new Uint8Array(buf);
+        for (let i = 0; i < wbout.length; i++) {
+            view[i] = wbout.charCodeAt(i) & 0xFF;
+        }
+        return new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     }
 
     function clamp(value, min, max) {
