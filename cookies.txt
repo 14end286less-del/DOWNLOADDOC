@@ -1,0 +1,7 @@
+DownloadDoc Cookie Policy
+
+We use localStorage to store your preferences:
+- Theme choice: remembers dark/light mode preference
+- Cookie consent: remembers whether you accepted or declined the banner
+
+No cookies are set by third parties. All data stays in your browser.
