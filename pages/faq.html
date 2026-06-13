@@ -60,7 +60,7 @@
                 "name": "What formats are supported?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Images (PNG, JPG, GIF, WebP) compress natively. PDFs and Word docs are supported with embedded image optimization."
+                    "text": "Images (PNG, JPG, GIF, WebP) compress natively. PDFs, Word docs, Excel exports, and image-to-PDF tools are supported with browser-based processing."
                 }
             },
             {
@@ -68,7 +68,31 @@
                 "name": "How much will my file shrink?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Images often see 50-80% reduction at good quality. Document results vary. Try the quality slider to balance size vs clarity."
+                    "text": "Images often see 50–80% reduction at good quality. Document results vary. Try the quality slider to balance size vs clarity."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do I need to create an account?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Nope. No account, no email, no sign-up required. Just open the site and start compressing."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does it work on mobile?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. The interface is fully responsive and works on phones, tablets, and desktops."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I compress multiple files at once?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Currently one file at a time. You can click Compress Another after each run."
                 }
             }
         ]
@@ -268,6 +292,23 @@
                     </summary>
                     <p class="text-sm text-muted-foreground mt-3 leading-relaxed dark:text-muted-foreground-dark">Currently one file at a time. You can click Compress Another after each run.</p>
                 </details>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 border-t border-border">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="prose prose-sm dark:prose-invert max-w-none space-y-6">
+                <div>
+                    <h2 class="text-xl font-semibold mb-2">Understanding document compression technology</h2>
+                    <p class="text-muted-foreground dark:text-muted-foreground-dark">Document compression reduces file size through various techniques. For images, the process involves resizing and applying format-specific compression algorithms. JPEG uses lossy compression, removing less noticeable details. WebP provides superior compression ratios with minimal quality loss. PNG uses lossless compression for graphics with sharp edges.</p>
+                    <p class="text-muted-foreground dark:text-muted-foreground-dark">PDF compression focuses on image streams within documents. By reducing embedded image quality and optimizing compression parameters, significant file size reductions are achievable. Vector content in PDFs remains unchanged, preserving text sharpness and scalability.</p>
+                </div>
+                <div>
+                    <h2 class="text-xl font-semibold mb-2">Privacy and security benefits</h2>
+                    <p class="text-muted-foreground dark:text-muted-foreground-dark">Browser-based processing eliminates server-side security risks. Traditional compressors require uploading files to remote servers, creating potential data interception points. DownloadDoc's local processing ensures your documents remain on your device throughout the entire compression workflow.</p>
+                    <p class="text-muted-foreground dark:text-muted-foreground-dark">This approach benefits businesses handling confidential information, students with academic work, and anyone concerned about data privacy. No personal information is required, no account creation needed, and no server logs contain your file metadata.</p>
+                </div>
             </div>
         </div>
     </section>
