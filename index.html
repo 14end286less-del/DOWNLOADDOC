@@ -50,6 +50,7 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -343,7 +344,7 @@
             <div class="upload-card rounded-xl p-8 lg:p-10 border border-border dark:bg-background-dark dark:border-border-dark">
                 <!-- Upload Zone -->
                 <div id="uploadZone" class="group relative rounded-lg border-2 border-dashed border-border hover:border-muted-foreground/40 transition-colors p-12 text-center cursor-pointer dark:border-border-dark">
-                    <input type="file" id="fileInput" class="hidden" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.gif,.webp">
+                    <input type="file" id="fileInput" class="hidden" accept=".pdf,.docx,.png,.jpg,.jpeg,.gif,.webp,image/*">
                     <div class="max-w-xs mx-auto">
                         <div class="w-12 h-12 rounded-lg bg-muted/10 dark:bg-white/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition-transform">
                             <svg class="w-6 h-6 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -353,7 +354,7 @@
                             </svg>
                         </div>
                         <p class="text-sm font-medium mb-1">Drop your file here, or click to browse</p>
-                        <p class="text-xs text-muted-foreground">PDF · DOC · DOCX · PNG · JPG · GIF · WebP · 100 KB to 15 MB</p>
+                        <p class="text-xs text-muted-foreground">PDF · DOCX · PNG · JPG · GIF · WebP · 100 KB to 15 MB</p>
                     </div>
                 </div>
                 <p id="fileError" class="hidden mt-4 text-sm font-medium text-red-600 dark:text-red-400"></p>
@@ -691,6 +692,7 @@
         const uploadZone = document.getElementById('uploadZone');
         const fileInput = document.getElementById('fileInput');
         const fileSection = document.getElementById('fileSection');
+        const fileError = document.getElementById('fileError');
         const resultsSection = document.getElementById('resultsSection');
         const compressBtn = document.getElementById('compressBtn');
         const resetBtn = document.getElementById('resetBtn');
@@ -728,6 +730,15 @@
         });
 
         function handleFile(file) {
+            if (!isSupportedFile(file)) {
+                currentFile = null;
+                compressedBlob = null;
+                resultsSection.classList.add('hidden');
+                setFileError('Unsupported file type. Please upload a PNG, JPG, GIF, WebP, PDF, or DOCX file.');
+                return;
+            }
+
+            setFileError('');
             currentFile = file;
             document.getElementById('fileName').textContent = file.name;
             document.getElementById('fileSize').textContent = formatFileSize(file.size);
@@ -735,7 +746,7 @@
             const previewImage = document.getElementById('previewImage');
             const previewContent = document.getElementById('previewContent');
 
-            if (file.type.startsWith('image/')) {
+            if (isImageFile(file)) {
                 if (originalUrl) URL.revokeObjectURL(originalUrl);
                 originalUrl = URL.createObjectURL(file);
                 previewImage.src = originalUrl;
@@ -769,63 +780,201 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
-        compressBtn.addEventListener('click', async () => {
-            if (!currentFile) return;
+        function setFileError(message) {
+            if (!fileError) return;
+            if (!message) {
+                fileError.textContent = '';
+                fileError.classList.add('hidden');
+                return;
+            }
+            fileError.textContent = message;
+            fileError.classList.remove('hidden');
+        }
 
+        function isImageFile(file) {
+            const name = file.name.toLowerCase();
+            return file.type.startsWith('image/') || /\.(png|jpe?g|gif|webp)$/i.test(name);
+        }
+
+        function isSupportedFile(file) {
+            const name = file.name.toLowerCase();
+            return isImageFile(file) ||
+                file.type === 'application/pdf' ||
+                name.endsWith('.pdf') ||
+                file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+                name.endsWith('.docx');
+        }
+
+        function getOutputMimeType(requestedFormat, originalType) {
+            if (requestedFormat !== 'same') return requestedFormat;
+            if (originalType === 'image/jpeg' || originalType === 'image/png' || originalType === 'image/webp') return originalType;
+            return 'image/png';
+        }
+
+        function getExtensionFromMime(mimeType) {
+            const map = {
+                'image/jpeg': 'jpg',
+                'image/png': 'png',
+                'image/webp': 'webp',
+                'application/pdf': 'pdf',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
+                'application/zip': 'zip'
+            };
+            return map[mimeType] || 'bin';
+        }
+
+        function safeFileName(name) {
+            return String(name || 'compressed-file').replace(/\.[^/.]+$/, '').replace(/[^\w.-]+/g, '_');
+        }
+
+        function setCompressButtonLoading(message) {
             compressBtn.disabled = true;
-            const originalHTML = compressBtn.innerHTML;
             compressBtn.innerHTML = `
                 <svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Compressing...
+                ${message}
             `;
+        }
 
-            await new Promise(resolve => setTimeout(resolve, 800));
+        function restoreCompressButton(originalHTML) {
+            compressBtn.disabled = false;
+            compressBtn.innerHTML = originalHTML;
+        }
 
-            const quality = parseInt(qualitySlider.value) / 100;
-            const maxDim = parseInt(dimensionSelect.value);
-            const outputFormat = formatSelect.value === 'same' ? currentFile.type : formatSelect.value;
+        function canvasToBlob(canvas, mimeType, quality) {
+            return new Promise((resolve) => {
+                if (typeof canvas.toBlob === 'function') {
+                    canvas.toBlob((blob) => resolve(blob), mimeType, quality);
+                    return;
+                }
+                const dataUrl = canvas.toDataURL(mimeType, quality);
+                fetch(dataUrl).then((response) => response.blob()).then(resolve).catch(() => resolve(null));
+            });
+        }
 
-            if (currentFile.type.startsWith('image/')) {
+        function loadImage(objectUrl) {
+            return new Promise((resolve, reject) => {
                 const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    let width = img.width;
-                    let height = img.height;
+                img.onload = () => resolve(img);
+                img.onerror = () => reject(new Error('This image could not be read by your browser.'));
+                img.src = objectUrl;
+            });
+        }
 
-                    if (width > maxDim || height > maxDim) {
-                        const ratio = Math.min(maxDim / width, maxDim / height);
-                        width = Math.floor(width * ratio);
-                        height = Math.floor(height * ratio);
-                    }
+        async function compressImage(file, quality, maxDim, outputFormat) {
+            const objectUrl = URL.createObjectURL(file);
+            try {
+                const img = await loadImage(objectUrl);
+                const canvas = document.createElement('canvas');
+                const width = img.naturalWidth || img.width;
+                const height = img.naturalHeight || img.height;
+                const scale = Math.min(1, maxDim / Math.max(width, height));
+                canvas.width = Math.max(1, Math.round(width * scale));
+                canvas.height = Math.max(1, Math.round(height * scale));
 
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
+                const ctx = canvas.getContext('2d');
+                if (!ctx) throw new Error('Canvas is not available in this browser.');
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
 
-                    const mimeType = outputFormat;
-                    canvas.toBlob((blob) => {
-                        if (blob) {
-                            compressedBlob = blob;
-                            showResults(blob.size, currentFile.size);
-                        } else {
-                            alert('Compression failed. Try again.');
-                        }
-                        compressBtn.disabled = false;
-                        compressBtn.innerHTML = originalHTML;
-                    }, mimeType, quality);
-                };
-                img.src = URL.createObjectURL(currentFile);
-            } else {
-                const simulatedRatio = quality * 0.7 + 0.15;
-                const simulatedSize = Math.floor(currentFile.size * (1 - simulatedRatio));
-                compressedBlob = new Blob(['simulated'], { type: currentFile.type });
-                showResults(simulatedSize, currentFile.size);
-                compressBtn.disabled = false;
-                compressBtn.innerHTML = originalHTML;
+                const mimeType = getOutputMimeType(outputFormat, file.type);
+                if (mimeType === 'image/jpeg') {
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                const blob = await canvasToBlob(canvas, mimeType, quality);
+                if (blob) return blob;
+                const fallback = await canvasToBlob(canvas, 'image/png', 0.92);
+                if (fallback) return fallback;
+                throw new Error('Your browser could not export the compressed image.');
+            } finally {
+                URL.revokeObjectURL(objectUrl);
+            }
+        }
+
+        async function compressPdf(file, quality, maxDim) {
+            if (!window.pdfjsLib) throw new Error('PDF compression library is not available.');
+            if (!window.PDFLib) throw new Error('PDF generation library is not available.');
+
+            pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsLib.GlobalWorkerOptions.workerSrc || 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            const outputPdf = await PDFLib.PDFDocument.create();
+            const jpegQuality = Math.max(0.2, Math.min(0.95, quality));
+
+            for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+                const page = await pdf.getPage(pageNumber);
+                const viewport = page.getViewport({ scale: 1 });
+                const scale = Math.min(1, maxDim / Math.max(viewport.width, viewport.height));
+                const renderViewport = page.getViewport({ scale });
+                const canvas = document.createElement('canvas');
+                canvas.width = Math.max(1, Math.floor(renderViewport.width));
+                canvas.height = Math.max(1, Math.floor(renderViewport.height));
+
+                const ctx = canvas.getContext('2d');
+                if (!ctx) throw new Error('Canvas is not available in this browser.');
+
+                await page.render({ canvasContext: ctx, viewport: renderViewport }).promise;
+                const imageBlob = await canvasToBlob(canvas, 'image/jpeg', jpegQuality);
+                if (!imageBlob) throw new Error('Could not render PDF page.');
+
+                const imageBytes = await imageBlob.arrayBuffer();
+                const image = await PDFLib.embedJpg(imageBytes);
+                const pdfPage = outputPdf.addPage([renderViewport.width, renderViewport.height]);
+                pdfPage.drawImage(image, { x: 0, y: 0, width: renderViewport.width, height: renderViewport.height });
+            }
+
+            const pdfBytes = await outputPdf.save();
+            return new Blob([pdfBytes], { type: 'application/pdf' });
+        }
+
+        async function compressDocx(file) {
+            if (!window.JSZip) throw new Error('DOCX compression library is not available.');
+            const zip = await JSZip.loadAsync(file);
+            const arrayBuffer = await zip.generateAsync({
+                type: 'arraybuffer',
+                compression: 'DEFLATE',
+                compressionOptions: { level: 9 }
+            });
+            return new Blob([arrayBuffer], { type: file.type || 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+        }
+
+        async function compressDocument(file, quality, maxDim) {
+            const name = file.name.toLowerCase();
+            if (file.type === 'application/pdf' || name.endsWith('.pdf')) return compressPdf(file, quality, maxDim);
+            if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || name.endsWith('.docx')) return compressDocx(file);
+            throw new Error('Only PDF, DOCX, and browser-readable images can be compressed here.');
+        }
+
+        compressBtn.addEventListener('click', async () => {
+            if (!currentFile) return;
+
+            const originalHTML = compressBtn.innerHTML;
+            setCompressButtonLoading('Compressing...');
+
+            try {
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                const quality = parseInt(qualitySlider.value) / 100;
+                const maxDim = parseInt(dimensionSelect.value);
+                const outputFormat = formatSelect.value;
+                const compressed = isImageFile(currentFile)
+                    ? await compressImage(currentFile, quality, maxDim, outputFormat)
+                    : await compressDocument(currentFile, quality, maxDim);
+
+                compressedBlob = compressed;
+                showResults(compressed.size, currentFile.size);
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } catch (error) {
+                console.error(error);
+                alert(error.message || 'Compression failed. Try again.');
+            } finally {
+                restoreCompressButton(originalHTML);
             }
         });
 
@@ -845,25 +994,20 @@
 
             resultsSection.classList.remove('hidden');
             resultsSection.classList.add('animate-fade-in-up');
-            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         downloadBtn.addEventListener('click', () => {
             if (!compressedBlob || !currentFile) return;
 
-            if (currentFile.type.startsWith('image/')) {
-                const url = URL.createObjectURL(compressedBlob);
-                const a = document.createElement('a');
-                const ext = compressedBlob.type.split('/')[1];
-                a.href = url;
-                a.download = currentFile.name.replace(/\.[^/.]+$/, '') + '_compressed.' + ext;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            } else {
-                alert('For PDFs and Word documents, browser-based compression has limited capability. The result demonstrates the interface. Your original file remains safe on your device.');
-            }
+            const url = URL.createObjectURL(compressedBlob);
+            const a = document.createElement('a');
+            const ext = getExtensionFromMime(compressedBlob.type) || getExtensionFromMime(currentFile.type);
+            a.href = url;
+            a.download = safeFileName(currentFile.name) + '_compressed.' + ext;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
         });
 
         resetBtn.addEventListener('click', resetAll);
