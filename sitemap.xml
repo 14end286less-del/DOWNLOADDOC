@@ -66,12 +66,12 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lodkm.com/ads.txt</loc>
+    <loc>https://lodkm.com/pages/cookies.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lodkm.com/pages/cookies.html</loc>
+    <loc>https://lodkm.com/ads.txt</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
